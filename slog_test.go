@@ -31,9 +31,9 @@ func TestSetCombinedLogFile(t *testing.T) {
 	err := SetCombinedLogFile("")
 	if err != nil {
 		return
-	} else {
-		t.Errorf("Unexpected result. Expected error, got none")
 	}
+
+	t.Errorf("Unexpected result. Expected error, got none")
 }
 
 func TestSetStdLogFile(t *testing.T) {
@@ -58,9 +58,9 @@ func TestSetStdLogFile(t *testing.T) {
 	err := SetStdLogFile("")
 	if err != nil {
 		return
-	} else {
-		t.Errorf("Unexpected result. Expected error, got none")
 	}
+
+	t.Errorf("Unexpected result. Expected error, got none")
 }
 
 func TestSetErrLogFile(t *testing.T) {
@@ -85,9 +85,9 @@ func TestSetErrLogFile(t *testing.T) {
 	err := SetErrLogFile("")
 	if err != nil {
 		return
-	} else {
-		t.Errorf("Unexpected result. Expected error, got none")
 	}
+
+	t.Errorf("Unexpected result. Expected error, got none")
 }
 
 func TestSetCombinedOutput(t *testing.T) {
@@ -206,9 +206,8 @@ func TestFatal(t *testing.T) {
 		output, err := cmd.CombinedOutput()
 		if e, ok := err.(*exec.ExitError); ok && !e.Success() && strings.HasSuffix(string(output), "Test\n") {
 			return
-		} else {
-			t.Errorf("Unexpected output or exit code. Expected output ending [%s], got [%s]", "Test\n", string(output))
 		}
+		t.Errorf("Unexpected output or exit code. Expected output ending [%s], got [%s]", "Test\n", string(output))
 	}
 }
 
