@@ -1,14 +1,14 @@
-// Package slag provides drop-in replacement for standard log package. It adds log levels and separating stdout and stderr.
+// Package slog provides drop-in replacement for standard log package. It adds log levels and separating stdout and stderr.
 // NOTE: It does not attempt to replace os.Stdout and os.Stderr, which might not be wise for some situations
 package slog
 
 import (
+	"fmt"
+	"io"
+	"os"
 	"runtime"
 	"strings"
 	"time"
-	"fmt"
-	"os"
-	"io"
 )
 
 // It is int so that you can add your own levels and use them
@@ -161,6 +161,7 @@ func Log(level int, msg ...interface{}) {
 }
 
 // Debug will send new log entry to stdout with DEBUG level
+// Additionally debug will add Package (only final bit) and callee function name to the message
 func Debug(msg ...interface{}) {
 	log(DEBUG, stdout, msg...)
 }

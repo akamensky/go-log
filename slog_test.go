@@ -1,17 +1,18 @@
 package slog
 
 import (
-	"testing"
-	"syscall"
-	"os"
 	"bytes"
-	"strings"
+	"os"
 	"os/exec"
+	"strings"
+	"syscall"
+	"testing"
 )
 
 type BufferCloser struct {
 	*bytes.Buffer
 }
+
 func (o *BufferCloser) Close() (err error) {
 	return
 }
