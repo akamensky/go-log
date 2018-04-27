@@ -48,20 +48,11 @@ func log(level int, output io.WriteCloser, msg ...interface{}) {
 		}
 		t := time.Now().Format("2006-01-02 15:04:05 -0700")
 		record := fmt.Sprintf(format+"\n", t, levelTag[level], callee, fmt.Sprint(msg...))
-		_, err := output.Write([]byte(record))
-		if err != nil {
-			// TODO: What should it do then?
-		}
+		output.Write([]byte(record))
 	}
 	if level == FATAL {
-		err := stdout.Close()
-		if err != nil {
-			// TODO: What should it do then?
-		}
-		err = stderr.Close()
-		if err != nil {
-			// TODO: What should it do then?
-		}
+		stdout.Close()
+		stderr.Close()
 		os.Exit(1)
 	}
 }
@@ -72,6 +63,18 @@ func SetLogLevel(level int) {
 
 func GetLogLevel() int {
 	return loggingLevel
+}
+
+func GetStdout() io.WriteCloser {
+	return stdout
+}
+
+func GetStderr() io.WriteCloser {
+	return stderr
+}
+
+func GetOutputs() (io.WriteCloser, io.WriteCloser) {
+	return stdout, stderr
 }
 
 func SetStdout(out io.WriteCloser) {
@@ -86,29 +89,45 @@ func SetStderr(out io.WriteCloser) {
 	}
 }
 
-func SetStdLogFile(filename string) {
-	f, err := os.OpenFile(filename, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
-	if err != nil {
-		log(FATAL, stderr, err.Error())
+func SetCombinedOutput(out io.WriteCloser) {
+	if out != nil {
+		stdout = out
+		stderr = out
 	}
-	stdout = f
 }
 
-func SetErrLogFile(filename string) {
+func SetStdLogFile(filename string) error {
 	f, err := os.OpenFile(filename, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
 	if err != nil {
-		log(FATAL, stderr, err.Error())
+		return err
 	}
-	stderr = f
+
+	stdout = f
+
+	return nil
 }
 
-func SetCombinedLogFile(filename string) {
+func SetErrLogFile(filename string) error {
 	f, err := os.OpenFile(filename, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
 	if err != nil {
-		log(FATAL, stderr, err.Error())
+		return err
 	}
+
+	stderr = f
+
+	return nil
+}
+
+func SetCombinedLogFile(filename string) error {
+	f, err := os.OpenFile(filename, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
+	if err != nil {
+		return err
+	}
+
 	stdout = f
 	stderr = f
+
+	return nil
 }
 
 func Log(level int, msg ...interface{}) {

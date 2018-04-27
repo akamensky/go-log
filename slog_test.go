@@ -26,6 +26,13 @@ func TestSetCombinedLogFile(t *testing.T) {
 	}
 
 	syscall.Unlink(logFileName)
+
+	err := SetCombinedLogFile("")
+	if err != nil {
+		return
+	} else {
+		t.Errorf("Unexpected result. Expected error, got none")
+	}
 }
 
 func TestSetStdLogFile(t *testing.T) {
@@ -46,6 +53,13 @@ func TestSetStdLogFile(t *testing.T) {
 	}
 
 	syscall.Unlink(logFileName)
+
+	err := SetStdLogFile("")
+	if err != nil {
+		return
+	} else {
+		t.Errorf("Unexpected result. Expected error, got none")
+	}
 }
 
 func TestSetErrLogFile(t *testing.T) {
@@ -66,6 +80,23 @@ func TestSetErrLogFile(t *testing.T) {
 	}
 
 	syscall.Unlink(logFileName)
+
+	err := SetErrLogFile("")
+	if err != nil {
+		return
+	} else {
+		t.Errorf("Unexpected result. Expected error, got none")
+	}
+}
+
+func TestSetCombinedOutput(t *testing.T) {
+	outBuff := &BufferCloser{bytes.NewBuffer(nil)}
+
+	SetCombinedOutput(outBuff)
+
+	if stdout != outBuff || stderr != outBuff {
+		t.Error("stdout or stderr does not match with expected value")
+	}
 }
 
 func TestSetStdout(t *testing.T) {
@@ -205,5 +236,29 @@ func TestGetLogLevel(t *testing.T) {
 
 	if GetLogLevel() != INFO {
 		t.Errorf("Unexpected default log level. Expected [%d], got [%d]", INFO, GetLogLevel())
+	}
+}
+
+func TestGetOutputs(t *testing.T) {
+	out, err := GetOutputs()
+
+	if out != stdout || err != stderr {
+		t.Errorf("Received stdout or stderr do  not match with used in package")
+	}
+}
+
+func TestGetStdout(t *testing.T) {
+	out := GetStdout()
+
+	if out != stdout {
+		t.Errorf("Received stdout does not match with the one used in package")
+	}
+}
+
+func TestGetStderr(t *testing.T) {
+	err := GetStderr()
+
+	if err != stderr {
+		t.Errorf("Received stderr does not match with the one used in package")
 	}
 }
