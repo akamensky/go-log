@@ -1,5 +1,5 @@
 # Golang slog
-[![GoDoc](https://godoc.org/github.com/akamensky/slog?status.svg)](https://godoc.org/github.com/akamensky/slog) [![Go Report Card](https://goreportcard.com/badge/github.com/akamensky/slog)](https://goreportcard.com/report/github.com/akamensky/slog) [![cover.run go](https://cover.run/go/github.com/akamensky/slog.svg)](https://cover.run/go/github.com/akamensky/slog) [![Build Status](https://travis-ci.org/akamensky/slog.svg?branch=master)](https://travis-ci.org/akamensky/slog)
+[![GoDoc](https://godoc.org/github.com/akamensky/slog?status.svg)](https://godoc.org/github.com/akamensky/slog) [![Go Report Card](https://goreportcard.com/badge/github.com/akamensky/slog)](https://goreportcard.com/report/github.com/akamensky/slog) [![cover.run](https://cover.run/go/github.com/akamensky/slog.svg?style=flat&tag=golang-1.10)](https://cover.run/go?tag=golang-1.10&repo=github.com%2Fakamensky%2Fslog) [![Build Status](https://travis-ci.org/akamensky/slog.svg?branch=master)](https://travis-ci.org/akamensky/slog)
 
 Simple drop-in replacement for golang log package which adds log levels 
 and better log message formatting.
