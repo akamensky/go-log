@@ -1,7 +1,6 @@
-// Package slog provides drop-in replacement for standard log package.
-// It adds log levels and separating stdout and stderr.
-// NOTE: It does not attempt to replace os.Stdout and os.Stderr,
-// which might not be wise for some situations
+// Package log provides drop-in replacement for standard log package.
+// It adds log levels, io.Writer interface for output and
+// named loggers with possibility of separate output.
 package log
 
 import (
@@ -79,10 +78,13 @@ func SetFormat(format string) {
 	}
 }
 
+// SetTimeFormat follows standard Golang time formatting
+// for default logger
 func SetTimeFormat(format string) {
 	*defaultLogger.timeFormat = format
 }
 
+// SetOutput sets output for default logger
 func SetOutput(w io.Writer) {
 	output.output = w
 }
@@ -98,22 +100,33 @@ func log(l *logger, lvl level, msg ...interface{}) {
 	}
 }
 
+// Log is a generic method that will write
+// to default logger and can accept custom
+// logging levels
 func Log(lvl level, msg ...interface{}) {
 	log(defaultLogger, lvl, msg...)
 }
 
+// Debug is a logging method that will write
+// to default logger with DEBUG level
 func Debug(msg ...interface{}) {
 	log(defaultLogger, DEBUG, msg...)
 }
 
+// Info is a logging method that will write
+// to default logger with INFO level
 func Info(msg ...interface{}) {
 	log(defaultLogger, INFO, msg...)
 }
 
+// Warn is a logging method that will write
+// to default logger with WARNING level
 func Warn(msg ...interface{}) {
 	log(defaultLogger, WARNING, msg...)
 }
 
+// Error is a logging method that will write
+// to default logger with Error level
 func Error(msg ...interface{}) {
 	log(defaultLogger, ERROR, msg...)
 }
