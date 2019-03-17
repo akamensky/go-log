@@ -30,7 +30,7 @@ var defaultFormat = "[{{.Timestamp}}] {{.Namespace}} {{.Level}}: {{.Message}}"
 var defaultTimeFormat = "2006-01-02 15:04:05 -0700"
 
 // Default output where the logs will be written
-// can be changed by SetOutput()
+// can be changed by SetHandler()
 // is inherited by NamedLogger
 // but can be overwritten
 // uses io.Writer as type

@@ -84,8 +84,8 @@ func SetTimeFormat(format string) {
 	*defaultLogger.timeFormat = format
 }
 
-// SetOutput sets output for default logger
-func SetOutput(w io.Writer) {
+// SetHandler sets output for default logger
+func SetHandler(w io.Writer) {
 	output.output = w
 }
 

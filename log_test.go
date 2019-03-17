@@ -6,10 +6,10 @@ import (
 	"testing"
 )
 
-func TestSetOutput(t *testing.T) {
+func TestSetHandler(t *testing.T) {
 	buff := bytes.NewBuffer(nil)
 
-	SetOutput(buff)
+	SetHandler(buff)
 
 	if defaultLogger.output.output != buff {
 		t.Error("default logger output does not match with expected value")
@@ -27,7 +27,7 @@ func TestSetLevel(t *testing.T) {
 func TestLog(t *testing.T) {
 	buff := bytes.NewBuffer(nil)
 
-	SetOutput(buff)
+	SetHandler(buff)
 
 	SetLevel(DEBUG)
 
@@ -43,7 +43,7 @@ func TestLog(t *testing.T) {
 func TestInfo(t *testing.T) {
 	buff := bytes.NewBuffer(nil)
 
-	SetOutput(buff)
+	SetHandler(buff)
 
 	SetLevel(INFO)
 
@@ -59,7 +59,7 @@ func TestInfo(t *testing.T) {
 func TestWarn(t *testing.T) {
 	buff := bytes.NewBuffer(nil)
 
-	SetOutput(buff)
+	SetHandler(buff)
 
 	SetLevel(WARNING)
 
@@ -75,7 +75,7 @@ func TestWarn(t *testing.T) {
 func TestErr(t *testing.T) {
 	buff := bytes.NewBuffer(nil)
 
-	SetOutput(buff)
+	SetHandler(buff)
 
 	SetLevel(ERROR)
 
@@ -91,7 +91,7 @@ func TestErr(t *testing.T) {
 func TestDebug(t *testing.T) {
 	buff := bytes.NewBuffer(nil)
 
-	SetOutput(buff)
+	SetHandler(buff)
 
 	SetLevel(DEBUG)
 
@@ -109,7 +109,7 @@ func TestNamedLoggerSameOutput(t *testing.T) {
 
 	namedLogger := GetNamedLogger("sublogger")
 
-	SetOutput(buff)
+	SetHandler(buff)
 
 	SetLevel(INFO)
 
@@ -123,7 +123,7 @@ func TestNamedLoggerSameOutput(t *testing.T) {
 
 	buff = bytes.NewBuffer(nil)
 
-	SetOutput(buff)
+	SetHandler(buff)
 
 	SetLevel(INFO)
 
@@ -143,7 +143,7 @@ func TestNamedLoggerDiffOutput(t *testing.T) {
 	namedLogger := GetNamedLogger("sublogger")
 	namedLogger.SetOutput(namedBuff)
 
-	SetOutput(buff)
+	SetHandler(buff)
 
 	SetLevel(INFO)
 
