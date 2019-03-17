@@ -17,6 +17,8 @@ type rec struct {
 	Message   string
 }
 
+// Level is a builtin type which refers to logging level
+// actually an int under the hood for easy level comparison
 type Level int
 
 // NamedLogger is a named logger
