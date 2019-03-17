@@ -6,6 +6,7 @@ package log
 import (
 	"fmt"
 	"io"
+	"os"
 	"time"
 )
 
@@ -15,6 +16,7 @@ import (
 // for it to be included
 const (
 	DISABLED level = -1 // Logging disabled. Like completely
+	FATAL    level = 0  // Show errors and fatal errors
 	ERROR    level = 10 // Show errors and fatal errors
 	WARNING  level = 20 // Show warnings and errors
 	INFO     level = 30 // Show information messages and everything higher than that
@@ -23,6 +25,7 @@ const (
 
 var levelMap = map[level]string{
 	DISABLED: "",
+	FATAL:    "FATAL",
 	ERROR:    "ERROR",
 	WARNING:  "WARN",
 	INFO:     "INFO",
@@ -97,6 +100,9 @@ func log(l *logger, lvl level, msg ...interface{}) {
 			Level:     levelMap[lvl],
 			Message:   fmt.Sprintln(msg...),
 		})
+		if lvl == FATAL {
+			os.Exit(1)
+		}
 	}
 }
 
@@ -107,10 +113,20 @@ func Log(lvl level, msg ...interface{}) {
 	log(defaultLogger, lvl, msg...)
 }
 
+// Logf is just like Log, but with formatting
+func Logf(lvl level, format string, a ...interface{}) {
+	log(defaultLogger, lvl, fmt.Sprintf(format, a...))
+}
+
 // Debug is a logging method that will write
 // to default logger with DEBUG level
 func Debug(msg ...interface{}) {
 	log(defaultLogger, DEBUG, msg...)
+}
+
+// Debugf is just like Debug, but with formatting
+func Debugf(format string, a ...interface{}) {
+	log(defaultLogger, DEBUG, fmt.Sprintf(format, a...))
 }
 
 // Info is a logging method that will write
@@ -119,14 +135,41 @@ func Info(msg ...interface{}) {
 	log(defaultLogger, INFO, msg...)
 }
 
+// Infof is just like Info, but with formatting
+func Infof(format string, a ...interface{}) {
+	log(defaultLogger, INFO, fmt.Sprintf(format, a...))
+}
+
 // Warn is a logging method that will write
 // to default logger with WARNING level
 func Warn(msg ...interface{}) {
 	log(defaultLogger, WARNING, msg...)
 }
 
+// Warnf is just like Warn, but with formatting
+func Warnf(format string, a ...interface{}) {
+	log(defaultLogger, WARNING, fmt.Sprintf(format, a...))
+}
+
 // Error is a logging method that will write
 // to default logger with Error level
 func Error(msg ...interface{}) {
 	log(defaultLogger, ERROR, msg...)
+}
+
+// Errorf is just like Error, but with formatting
+func Errorf(format string, a ...interface{}) {
+	log(defaultLogger, ERROR, fmt.Sprintf(format, a...))
+}
+
+// Fatal is a logging method that will write
+// to default logger with Fatal level, and
+// then terminate program with exist code 1
+func Fatal(msg ...interface{}) {
+	log(defaultLogger, FATAL, msg...)
+}
+
+// Fatalf is just like Fatal, but with formatting
+func Fatalf(format string, a ...interface{}) {
+	log(defaultLogger, FATAL, fmt.Sprintf(format, a...))
 }
