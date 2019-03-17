@@ -15,15 +15,15 @@ import (
 // Current log level should be more or equal to the message level
 // for it to be included
 const (
-	DISABLED level = -1 // Logging disabled. Like completely
-	FATAL    level = 0  // Show errors and fatal errors
-	ERROR    level = 10 // Show errors and fatal errors
-	WARNING  level = 20 // Show warnings and errors
-	INFO     level = 30 // Show information messages and everything higher than that
-	DEBUG    level = 40 // Show all including debug messages
+	DISABLED Level = -1 // Logging disabled. Like completely
+	FATAL    Level = 0  // Show errors and fatal errors
+	ERROR    Level = 10 // Show errors and fatal errors
+	WARNING  Level = 20 // Show warnings and errors
+	INFO     Level = 30 // Show information messages and everything higher than that
+	DEBUG    Level = 40 // Show all including debug messages
 )
 
-var levelMap = map[level]string{
+var levelMap = map[Level]string{
 	DISABLED: "",
 	FATAL:    "FATAL",
 	ERROR:    "ERROR",
@@ -58,7 +58,7 @@ func GetNamedLogger(namespace string) NamedLogger {
 // where logging output will include
 // all levels lower than currently set
 // default level is INFO
-func SetLevel(level level) {
+func SetLevel(level Level) {
 	loggingLevel = level
 }
 
@@ -92,7 +92,7 @@ func SetHandler(w io.Writer) {
 	output.output = w
 }
 
-func log(l *logger, lvl level, msg ...interface{}) {
+func log(l *logger, lvl Level, msg ...interface{}) {
 	if lvl <= loggingLevel && loggingLevel >= DISABLED {
 		_ = l.format.Execute(l.output.output, &rec{
 			Timestamp: time.Now().Format(*l.timeFormat),
@@ -109,12 +109,12 @@ func log(l *logger, lvl level, msg ...interface{}) {
 // Log is a generic method that will write
 // to default logger and can accept custom
 // logging levels
-func Log(lvl level, msg ...interface{}) {
+func Log(lvl Level, msg ...interface{}) {
 	log(defaultLogger, lvl, msg...)
 }
 
 // Logf is just like Log, but with formatting
-func Logf(lvl level, format string, a ...interface{}) {
+func Logf(lvl Level, format string, a ...interface{}) {
 	log(defaultLogger, lvl, fmt.Sprintf(format, a...))
 }
 

@@ -17,7 +17,7 @@ type rec struct {
 	Message   string
 }
 
-type level int
+type Level int
 
 // NamedLogger is a named logger
 // where each part of application
@@ -28,9 +28,9 @@ type NamedLogger interface {
 	// Log is a generic method that will write
 	// to named logger and can accept custom
 	// logging levels
-	Log(lvl level, msg ...interface{})
+	Log(lvl Level, msg ...interface{})
 	// Logf is just like Log, but with formatting
-	Logf(lvl level, format string, a ...interface{})
+	Logf(lvl Level, format string, a ...interface{})
 
 	// Debug is a logging method that will write
 	// to named logger with DEBUG level
@@ -96,12 +96,12 @@ type logger struct {
 // Log is a generic method that will write
 // to named logger and can accept custom
 // logging levels
-func (l *logger) Log(lvl level, msg ...interface{}) {
+func (l *logger) Log(lvl Level, msg ...interface{}) {
 	log(l, lvl, msg...)
 }
 
 // Logf is just like Log, but with formatting
-func (l *logger) Logf(lvl level, format string, a ...interface{}) {
+func (l *logger) Logf(lvl Level, format string, a ...interface{}) {
 	log(l, lvl, fmt.Sprintf(format, a...))
 }
 
